@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@sveltia/cms": "^0.150.1",
     "astro": "^6.0.8"
   }
 }
