@@ -1,0 +1,33 @@
+backend:
+  name: github
+  repo: pipipurira/afif-site
+  branch: main
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: writing
+    label: Writing
+    folder: src/content/writing
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Judul, name: title, widget: string }
+      - { label: Kategori, name: category, widget: select, options: [Opini, Behind the Scene, Inspirasi] }
+      - { label: Tanggal, name: date, widget: date }
+      - { label: Cover, name: cover, widget: image, required: false }
+      - { label: Konten, name: body, widget: markdown }
+
+  - name: work
+    label: Work
+    folder: src/content/work
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Judul, name: title, widget: string }
+      - { label: Kategori, name: category, widget: select, options: [Videografi, Fotografi] }
+      - { label: Tahun, name: year, widget: string }
+      - { label: Thumbnail, name: thumbnail, widget: image }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+      - { label: Deskripsi, name: body, widget: markdown }
