@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro'
+
+const posts = [
+  {
+    slug: "post-1",
+    title: "Kenapa saya berhenti percaya pada portofolio.",
+    category: "Opini",
+    date: "Maret 2026",
+    readTime: "5 min",
+  },
+  {
+    slug: "post-2",
+    title: "Di balik video yang tidak ada yang tahu prosesnya.",
+    category: "Behind the Scene",
+    date: "Februari 2026",
+    readTime: "7 min",
+  },
+  {
+    slug: "post-3",
+    title: "Referensi visual yang selalu saya kembali lagi.",
+    category: "Inspirasi",
+    date: "Januari 2026",
+    readTime: "4 min",
+  },
+  {
+    slug: "post-4",
+    title: "Tentang bekerja di bidang yang bukan jurusanmu.",
+    category: "Opini",
+    date: "Desember 2025",
+    readTime: "6 min",
+  },
+]
+
+const categories = ["Semua", "Opini", "Behind the Scene", "Inspirasi"]
+---
+
+<Base title="Writing">
+  <main>
+    <div class="page-header">
+      <h2>Writing</h2>
+      <p>{posts.length} tulisan</p>
+    </div>
+
+    <div class="categories">
+      {categories.map((cat, i) => (
+        <span class={`cat ${i === 0 ? 'active' : ''}`}>{cat}</span>
+      ))}
+    </div>
+
+    <div class="post-list">
+      {posts.map((post, i) => (
+        <a href={`/writing/${post.slug}`} class="post-item">
+          <span class="post-number">0{i + 1}</span>
+          <div class="post-main">
+            <p class="post-title">{post.title}</p>
+            <p class="post-meta">{post.category} · {post.date} · {post.readTime} read</p>
+          </div>
+          <span class="post-arrow">→</span>
+        </a>
+      ))}
+    </div>
+  </main>
+</Base>
+
+<style>
+  main { padding: 3rem 2rem; max-width: 900px; margin: 0 auto; }
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 2rem;
+    border-bottom: 0.5px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  .page-header h2 {
+    font-size: 13px;
+    font-family: system-ui;
+    color: var(--muted);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .page-header p { font-size: 12px; color: var(--muted); }
+
+  .categories {
+    display: flex;
+    gap: .75rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+  .cat {
+    font-size: 12px;
+    color: var(--muted);
+    padding: 4px 12px;
+    border: 0.5px solid var(--border);
+    cursor: pointer;
+  }
+  .cat.active {
+    color: var(--text);
+    border-color: var(--text);
+  }
+
+  .post-list { display: flex; flex-direction: column; }
+
+  .post-item {
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.75rem 0;
+    border-bottom: 0.5px solid var(--border);
+    transition: opacity .2s;
+  }
+  .post-item:first-child { border-top: 0.5px solid var(--border); }
+  .post-item:hover { opacity: .7; }
+
+  .post-number {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--font-mono, monospace);
+  }
+  .post-title {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--text);
+    margin-bottom: .4rem;
+  }
+  .post-meta {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .post-arrow {
+    font-size: 16px;
+    color: var(--muted);
+    transition: transform .2s;
+  }
+  .post-item:hover .post-arrow { transform: translateX(4px); }
+</style>
