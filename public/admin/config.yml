@@ -15,7 +15,7 @@ collections:
     fields:
       - { label: Judul, name: title, widget: string }
       - { label: Kategori, name: category, widget: select, options: [Opini, Behind the Scene, Inspirasi] }
-      - { label: Tanggal, name: date, widget: date }
+      - { label: Tanggal, name: date, widget: datetime, date_format: true, time_format: false }
       - { label: Cover, name: cover, widget: image, required: false }
       - { label: Konten, name: body, widget: markdown }
 
