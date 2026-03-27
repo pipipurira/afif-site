@@ -1,38 +1,12 @@
 ---
 import Base from '../layouts/Base.astro'
+import { getCollection } from 'astro:content'
 
-const posts = [
-  {
-    slug: "post-1",
-    title: "Kenapa saya berhenti percaya pada portofolio.",
-    category: "Opini",
-    date: "Maret 2026",
-    readTime: "5 min",
-  },
-  {
-    slug: "post-2",
-    title: "Di balik video yang tidak ada yang tahu prosesnya.",
-    category: "Behind the Scene",
-    date: "Februari 2026",
-    readTime: "7 min",
-  },
-  {
-    slug: "post-3",
-    title: "Referensi visual yang selalu saya kembali lagi.",
-    category: "Inspirasi",
-    date: "Januari 2026",
-    readTime: "4 min",
-  },
-  {
-    slug: "post-4",
-    title: "Tentang bekerja di bidang yang bukan jurusanmu.",
-    category: "Opini",
-    date: "Desember 2025",
-    readTime: "6 min",
-  },
-]
+const posts = (await getCollection('writing')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+)
 
-const categories = ["Semua", "Opini", "Behind the Scene", "Inspirasi"]
+const categories = ['Semua', 'Opini', 'Behind the Scene', 'Inspirasi']
 ---
 
 <Base title="Writing">
@@ -50,11 +24,13 @@ const categories = ["Semua", "Opini", "Behind the Scene", "Inspirasi"]
 
     <div class="post-list">
       {posts.map((post, i) => (
-        <a href={`/writing/${post.slug}`} class="post-item">
+        <a href={`/writing/${post.id}`} class="post-item">
           <span class="post-number">0{i + 1}</span>
           <div class="post-main">
-            <p class="post-title">{post.title}</p>
-            <p class="post-meta">{post.category} · {post.date} · {post.readTime} read</p>
+            <p class="post-title">{post.data.title}</p>
+            <p class="post-meta">
+              {post.data.category} · {post.data.date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })}
+            </p>
           </div>
           <span class="post-arrow">→</span>
         </a>
@@ -96,10 +72,7 @@ const categories = ["Semua", "Opini", "Behind the Scene", "Inspirasi"]
     border: 0.5px solid var(--border);
     cursor: pointer;
   }
-  .cat.active {
-    color: var(--text);
-    border-color: var(--text);
-  }
+  .cat.active { color: var(--text); border-color: var(--text); }
 
   .post-list { display: flex; flex-direction: column; }
 
@@ -118,7 +91,7 @@ const categories = ["Semua", "Opini", "Behind the Scene", "Inspirasi"]
   .post-number {
     font-size: 12px;
     color: var(--muted);
-    font-family: var(--font-mono, monospace);
+    font-family: monospace;
   }
   .post-title {
     font-family: Georgia, serif;
@@ -128,14 +101,7 @@ const categories = ["Semua", "Opini", "Behind the Scene", "Inspirasi"]
     color: var(--text);
     margin-bottom: .4rem;
   }
-  .post-meta {
-    font-size: 12px;
-    color: var(--muted);
-  }
-  .post-arrow {
-    font-size: 16px;
-    color: var(--muted);
-    transition: transform .2s;
-  }
+  .post-meta { font-size: 12px; color: var(--muted); }
+  .post-arrow { font-size: 16px; color: var(--muted); transition: transform .2s; }
   .post-item:hover .post-arrow { transform: translateX(4px); }
 </style>
