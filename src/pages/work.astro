@@ -1,39 +1,10 @@
 ---
 import Base from '../layouts/Base.astro'
+import { getCollection } from 'astro:content'
 
-const projects = [
-  {
-    slug: "project-1",
-    title: "Judul Project Pertama",
-    category: "Videografi",
-    year: "2024",
-    featured: true,
-  },
-  {
-    slug: "project-2",
-    title: "Judul Project Kedua",
-    category: "Fotografi",
-    year: "2024",
-    featured: false,
-  },
-  {
-    slug: "project-3",
-    title: "Judul Project Ketiga",
-    category: "Videografi",
-    year: "2023",
-    featured: false,
-  },
-  {
-    slug: "project-4",
-    title: "Judul Project Keempat",
-    category: "Fotografi",
-    year: "2023",
-    featured: false,
-  },
-]
-
-const featured = projects.find(p => p.featured)
-const rest = projects.filter(p => !p.featured)
+const projects = await getCollection('work')
+const featured = projects.find(p => p.data.featured)
+const rest = projects.filter(p => !p.data.featured)
 ---
 
 <Base title="Work">
@@ -44,36 +15,42 @@ const rest = projects.filter(p => !p.featured)
     </div>
 
     {featured && (
-      <a href={`/work/${featured.slug}`} class="featured">
-        <div class="featured-thumb">
-          <span class="placeholder-label">Featured</span>
+      <a href={`/work/${featured.id}`} class="featured">
+        <div class="featured-thumb" style={featured.data.thumbnail ? `background-image: url(${featured.data.thumbnail}); background-size: cover; background-position: center;` : ''}>
+          {!featured.data.thumbnail && <span class="placeholder-label">Featured</span>}
         </div>
         <div class="featured-info">
           <div>
-            <span class="tag">{featured.category}</span>
-            <h1>{featured.title}</h1>
+            <span class="tag">{featured.data.category}</span>
+            <h1>{featured.data.title}</h1>
           </div>
           <div class="featured-meta">
-            <span>{featured.year}</span>
+            <span>{featured.data.year}</span>
             <span>Lihat project →</span>
           </div>
         </div>
       </a>
     )}
 
-    <div class="grid">
-      {rest.map(project => (
-        <a href={`/work/${project.slug}`} class="project-card">
-          <div class="card-thumb">
-            <span class="placeholder-label">{project.category}</span>
-          </div>
-          <div class="card-info">
-            <p class="card-title">{project.title}</p>
-            <p class="card-meta">{project.category} · {project.year}</p>
-          </div>
-        </a>
-      ))}
-    </div>
+    {!featured && projects.length === 0 && (
+      <p class="empty">Belum ada project.</p>
+    )}
+
+    {rest.length > 0 && (
+      <div class="grid">
+        {rest.map(project => (
+          <a href={`/work/${project.id}`} class="project-card">
+            <div class="card-thumb" style={project.data.thumbnail ? `background-image: url(${project.data.thumbnail}); background-size: cover; background-position: center;` : ''}>
+              {!project.data.thumbnail && <span class="placeholder-label">{project.data.category}</span>}
+            </div>
+            <div class="card-info">
+              <p class="card-title">{project.data.title}</p>
+              <p class="card-meta">{project.data.category} · {project.data.year}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
   </main>
 </Base>
 
@@ -161,4 +138,5 @@ const rest = projects.filter(p => !p.featured)
   .card-title { font-size: 14px; }
   .card-meta { font-size: 12px; color: var(--muted); margin-top: .3rem; }
   .placeholder-label { font-size: 11px; color: var(--muted); }
+  .empty { font-size: 13px; color: var(--muted); }
 </style>
