@@ -131,4 +131,20 @@ import Base from '../layouts/Base.astro'
     line-height: 1.8;
     color: var(--text);
   }
+  /* --- MEDIA QUERIES (Untuk Layar HP) --- */
+  @media (max-width: 768px) {
+    .about-grid {
+      grid-template-columns: 1fr; /* Mengubah menjadi 1 kolom menyusun ke bawah */
+      gap: 2.5rem; /* Mengurangi jarak antar elemen agar pas di HP */
+    }
+    
+    .photo-placeholder {
+      max-width: 100%;
+      aspect-ratio: 16/9; /* Opsional: mengubah foto menjadi lanskap di HP agar tidak terlalu memakan layar vertikal, atau biarkan 3/4 jika lebih suka portrait */
+    }
+
+    main {
+      padding: 2rem 1.5rem; /* Menyesuaikan padding kiri-kanan */
+    }
+  }
 </style>

@@ -1,89 +1,395 @@
 ---
 import Base from '../layouts/Base.astro'
+import { getCollection } from 'astro:content'
+
+// Kita hanya membutuhkan data tulisan terbaru untuk Hero Section.
+// Logika pengambilan data projek (Work Grid) telah dihapus total.
+const allPosts = await getCollection('writing')
+const recentPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 3)
 ---
+
 <Base title="Afif Musyaffa">
   <main>
-    <div class="hero-left">
-      <p class="eyebrow">Jakarta — Content Creator</p>
-      <h1>Afif<br>Musyaffa.</h1>
-      <p class="bio">Videographer, photographer, and writer based in Jakarta. I document what's worth remembering.</p>
-      <div class="cta">
-        <a href="/work">See my work →</a>
-        <a href="/writing" class="secondary">Read my writing</a>
-      </div>
-    </div>
 
-    <div class="hero-right">
-      <div class="featured-work">
-        <span class="placeholder-label">Featured work</span>
+    <section class="hero-inside-head">
+      <div class="canvas-container">
+        <img src="/kepala-terbuka.png" alt="Inside Afif's Head" class="head-artwork" />
       </div>
-      <div class="latest-writing">
-        <div>
-          <p class="writing-label">Latest writing</p>
-          <p class="writing-title">Judul artikel terbaru kamu</p>
+    </section>
+
+    <section class="section-work-showreel">
+      <div class="section-header">
+        <p class="section-label">Showreel</p>
+      </div>
+ 
+      <a href="/work" class="work-marquee-banner">
+        <div class="marquee-track">
+          <img src="https://picsum.photos/id/447/800/1000.webp" alt="Projek 1" />
+          <img src="https://picsum.photos/id/448/800/1000.webp" alt="Projek 2" />
+          <img src="https://picsum.photos/id/449/800/1000.webp" alt="Projek 3" />
+          <img src="https://picsum.photos/id/450/800/1000.webp" alt="Projek 4" />
+          
+          <img src="https://picsum.photos/id/447/800/1000.webp" alt="Projek 1" />
+          <img src="https://picsum.photos/id/448/800/1000.webp" alt="Projek 2" />
+          <img src="https://picsum.photos/id/449/800/1000.webp" alt="Projek 3" />
+          <img src="https://picsum.photos/id/450/800/1000.webp" alt="Projek 4" />
         </div>
-        <span>→</span>
+
+        <div class="banner-overlay">
+          <span class="view-all-label">Lihat Semua Projek — Click Here</span>
+        </div>
+      </a>
+    </section>
+
+    <section class="section-writing">
+      <div class="section-header">
+        <p class="section-label">Writing</p>
+        <a href="/writing" class="section-link">Lihat semua →</a>
       </div>
-    </div>
+      <div class="post-list">
+        {recentPosts.map((post, i) => (
+          <a href={`/writing/${post.id}`} class="post-item-medium">
+            <div class="post-content-area">
+              <div class="post-meta-top">
+                <span class="post-category-tag">{post.data.category}</span>
+                <span class="post-author">oleh Afif Musyaffa</span>
+              </div>
+              
+              <h3 class="post-title-medium">{post.data.title}</h3>
+              
+              <p class="post-excerpt">Sebuah catatan kecil tentang proses kreatif dan observasi keseharian di balik layar.</p>
+              
+              <div class="post-meta-bottom">
+                <span>{post.data.date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                <span class="read-time">· 3 min read</span>
+              </div>
+            </div>
+
+            {post.data.cover ? (
+              <div class="post-thumbnail-area">
+                <img src={post.data.cover} alt={`Cover untuk ${post.data.title}`} />
+              </div>
+            ) : (
+              <div class="post-thumbnail-placeholder"></div>
+            )}
+          </a>
+        ))}
+        {recentPosts.length === 0 && (
+          <p class="empty">Belum ada tulisan.</p>
+        )}
+      </div>
+    </section>
+
   </main>
 </Base>
 
 <style>
+  /* --- Global Styles --- */
   main {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: calc(100vh - 57px);
+    max-width: 1440px; /* Membatasi lebar maksimal agar tidak terlalu meluas di monitor besar */
+    margin: 0 auto;
   }
-  .hero-left {
-    padding: 3rem 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-right: 0.5px solid var(--border);
-  }
-  .eyebrow {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: .1em;
-    text-transform: uppercase;
-  }
-  h1 { font-size: 52px; line-height: 1.0; margin-top: 2rem; }
-  .bio {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.75;
-    max-width: 300px;
-    margin-top: 1.75rem;
-  }
-  .cta {
-    display: flex;
-    gap: 1.5rem;
-    padding-top: 1.25rem;
-    border-top: 0.5px solid var(--border);
-  }
-  .cta a { font-size: 12px; border-bottom: 1px solid var(--border); padding-bottom: 2px; }
-  .cta a.secondary { color: var(--muted); border-bottom: none; }
-  .hero-right { display: grid; grid-template-rows: 1fr auto; }
-  .featured-work {
-    background: var(--surface);
+
+  /* --- Hero Section (Inside Head Concept) --- */
+  .hero-inside-head {
+    width: 100%;
+    min-height: calc(100vh - 57px); /* Mengambil tinggi layar penuh dikurangi navbar */
+    background: var(--bg); /* Latar gelap bawaan tema website-mu */
     border-bottom: 0.5px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden; /* Memastikan garis/gambar yang keluar jalur terpotong rapi */
+    padding: 2rem;
   }
-  .latest-writing {
-    padding: 1.25rem 1.5rem;
+
+  .canvas-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px; /* Batas maksimal lebar kanvas di desktop */
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 1rem;
   }
-  .latest-writing > div { flex: 1; }
-  .writing-label {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: .06em;
-    text-transform: uppercase;
+
+  .head-artwork {
+    width: 100%;
+    max-height: 85vh; /* Menjaga agar gambar tidak terpotong layar atas-bawah */
+    object-fit: contain; /* Memastikan keseluruhan PNG milikmu tampil utuh tanpa distorsi */
+    z-index: 2;
   }
   .writing-title { font-size: 13px; margin-top: .3rem; line-height: 1.4; }
+
+  /* --- Section Shared --- */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2rem;
+  }
+  .section-label {
+    font-size: 14px; /* Naik dari 11px */
+    color: var(--muted);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .section-link { font-size: 12px; color: var(--muted); }
+  .section-link:hover { color: var(--text); }
+
+/* --- Work Section (Marquee Showreel) --- */
+  .section-work-showreel {
+    padding: 4rem 2rem;
+    background: var(--surface);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .work-marquee-banner {
+    width: 100%;
+    height: 50vh; /* Tinggi banner di desktop mengambil 50% tinggi layar */
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .marquee-track {
+    display: flex;
+    height: 100%;
+    width: max-content;
+    animation: scrollMarquee 20s linear infinite; 
+  }
+
+  .marquee-track img {
+    height: 100%;
+    width: 25vw;
+    object-fit: cover;
+    /* --- PERUBAHAN 1: DEFAULT BERWARNA --- */
+    filter: grayscale(0%) blur(0px); /* Pastikan tajam dan berwarna */
+    border-right: 0.5px solid var(--border);
+    transition: filter 0.3s ease; /* Transisi halus untuk blur */
+  }
+
+  /* --- PERUBAHAN 2: HOVER ADD BLUR (Bukan menghapus grayscale) --- */
+  /* Efek blur diaplikasikan pada gambar saat banner di-hover */
+  .work-marquee-banner:hover .marquee-track img { 
+    filter: grayscale(0%) blur(4px); /* Blur 4px untuk kontras */
+  }
+
+  @keyframes scrollMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } 
+  }
+
+  .banner-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0); /* Transparan penuh di desktop saat normal */
+    transition: background-color 0.3s;
+    z-index: 2;
+  }
+
+  /* --- PERUBAHAN 3: DARKEN OVERLAY SAAT HOVER --- */
+  /* Sedikit gelapkan background di atas gambar yang blur agar teks putih makin menonjol */
+  .work-marquee-banner:hover .banner-overlay {
+    background: rgba(0,0,0,0.4); 
+  }
+
+  .view-all-label {
+    padding: 10px 20px;
+    border: 0.5px solid white;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0; /* Tersembunyi di desktop saat normal */
+    transition: opacity 0.3s;
+  }
+  
+  .work-marquee-banner:hover .view-all-label {
+    opacity: 1; /* Muncul saat hover di desktop */
+  }
+
+  /* --- Writing Section --- */
+  .section-writing {
+    padding: 4rem 2rem;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+  }
+  
+  .post-list { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 3rem; /* Jarak antar artikel yang cukup lega */
+    max-width: 1000px; /* Lebar maksimal artikel agar tidak terlalu melebar */
+    margin: 0 auto; /* Memusatkan daftar artikel */
+  }
+
+  .post-item-medium {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 0.5px solid var(--border);
+    transition: opacity .2s;
+  }
+  .post-item-medium:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .post-item-medium:hover { opacity: .7; }
+
+  /* Area Teks Kiri */
+  .post-content-area {
+    flex: 1; /* Mengambil sisa ruang */
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .post-meta-top {
+    font-size: 13px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .post-category-tag {
+    background: var(--surface);
+    padding: 2px 8px;
+    border-radius: 4px; /* Sedikit melengkung ala Medium */
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    border: 0.5px solid var(--border);
+  }
+  .post-author { color: var(--muted); }
+
+  .post-title-medium {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; /* Medium menggunakan sans-serif tebal untuk judul */
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .post-excerpt {
+    font-family: Georgia, serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Batasi maksimal 2 baris teks */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-meta-bottom {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+
+  /* Area Gambar Kanan */
+  .post-thumbnail-area {
+    width: 200px; /* Lebar gambar tetap ala Medium */
+    height: 134px; /* Rasio 3:2 */
+    flex-shrink: 0; /* Mencegah gambar tergencet */
+    background: var(--surface);
+    overflow: hidden;
+  }
+  
+  .post-thumbnail-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+    /* --- PERUBAHAN 1: HAPUS GRAYSCALE, TAMBAH WARNA --- */
+    filter: grayscale(0%); /* Gambar selalu berwarna penuh */
+    opacity: 1; /* Terang penuh saat normal */
+    
+    /* Gunakan transisi untuk efek redup yang halus */
+    transition: opacity 0.3s ease; 
+  }
+
+  /* --- PERUBAHAN 2: HOVER MEMBUAT REDUP (DIM) --- */
+  /* Saat item tulisan di-hover, gambarnya redup menjadi 70% kecerahan */
+  .post-item-medium:hover .post-thumbnail-area img {
+    filter: grayscale(0%); /* Tetap berwarna */
+    opacity: 0.7; /* Menjadi sedikit redup untuk kontras */
+  }
+
+  .post-thumbnail-placeholder {
+    display: none; /* Sembunyikan jika tidak ada gambar */
+  }
+
+  /* --- Penyesuaian Media Query untuk Mobile --- */
+  @media (max-width: 768px) {
+    .post-item-medium {
+      flex-direction: column-reverse; /* Di HP, gambar di atas teks */
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding-bottom: 2.5rem;
+    }
+    .post-thumbnail-area {
+      width: 100%; /* Gambar penuh di HP */
+      height: 200px;
+    }
+    .post-title-medium {
+      font-size: 22px;
+    }
+    .post-list { gap: 2.5rem; }
+  }
+
   .placeholder-label { font-size: 11px; color: var(--muted); }
+  .empty { font-size: 13px; color: var(--muted); }
+
+  /* --- MEDIA QUERIES (Untuk Layar HP < 768px) --- */
+  @media (max-width: 768px) {
+    /* Penyesuaian Hero Inside Head di HP */
+    .hero-inside-head {
+      min-height: 70vh; /* Sedikit lebih pendek di HP agar Showreel di bawahnya bisa sedikit mengintip */
+      padding: 1rem;
+    }
+
+    /* Penyesuaian Khusus Marquee di HP agar tampil sempurna */
+    .work-marquee-banner {
+      height: auto; /* Menggunakan rasio aspek, bukan tinggi tetap */
+      aspect-ratio: 4/5; /* Menjadi potret agar menonjol di layar HP */
+    }
+    .marquee-track {
+      animation-duration: 12s; /* Di HP, animasinya dipercepat agar terasa dinamis */
+    }
+    .marquee-track img {
+      width: 65vw;
+      /* --- PERUBAHAN DI MOBILE: JAGA TETAP TAJAM & BERWARNA --- */
+      filter: grayscale(0%) blur(0px) !important; /* Nonaktifkan blur di HP */
+    }
+
+    /* Penyesuaian Overlay Label di HP */
+    .view-all-label {
+      opacity: 1; /* Selalu muncul di HP */
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      padding: 8px 16px;
+    }
+
+    /* Penyesuaian Writing List di HP */
+    .post-item {
+      grid-template-columns: 32px 1fr auto;
+      gap: 1rem;
+    }
+    .post-title { font-size: 16px; }
+  }
 </style>
