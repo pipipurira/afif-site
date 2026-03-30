@@ -57,7 +57,10 @@ const recentPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
               
               <h3 class="post-title-medium">{post.data.title}</h3>
               
-              <p class="post-excerpt">Sebuah catatan kecil tentang proses kreatif dan observasi keseharian di balik layar.</p>
+              
+              {post.data.description && (
+                <p class="post-excerpt">{post.data.description}</p>
+              )}
               
               <div class="post-meta-bottom">
                 <span>{post.data.date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</span>

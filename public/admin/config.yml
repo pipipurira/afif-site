@@ -17,6 +17,7 @@ collections:
       - { label: Kategori, name: category, widget: select, options: [Opini, Behind the Scene, Inspirasi] }
       - { label: Tanggal, name: date, widget: datetime, date_format: true, time_format: false }
       - { label: Cover, name: cover, widget: image, required: false }
+      - { label: Deskripsi Singkat, name: description, widget: text, required: false }
       - { label: Konten, name: body, widget: markdown }
 
   - name: work
