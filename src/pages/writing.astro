@@ -24,7 +24,7 @@ const categories = ['Semua', 'Opini', 'Behind the Scene', 'Inspirasi']
 
     <div class="post-list">
   {posts.map((post, index) => (
-    <a href={`/writing/${post.slug}`} class="post-item">
+    <a href={`/writing/${post.id}`} class="post-item">
       <span class="post-number">{String(index + 1).padStart(2, '0')}</span>
       
       <div class="post-info">
