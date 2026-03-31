@@ -251,12 +251,11 @@ const recentPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
     border-bottom: 0.5px solid var(--border);
   }
   
-  .post-list { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 3rem; /* Jarak antar artikel yang cukup lega */
-    max-width: 1000px; /* Lebar maksimal artikel agar tidak terlalu melebar */
-    margin: 0 auto; /* Memusatkan daftar artikel */
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem; 
+    width: 100%; 
   }
 
   .post-item-medium {
@@ -274,6 +273,11 @@ const recentPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
   }
   .post-item-medium:hover { opacity: .7; }
 
+.post-item-medium img {
+    width: 320px;
+    height: 200px;
+    object-fit: cover;
+  }
   /* Area Teks Kiri */
   .post-content-area {
     flex: 1; /* Mengambil sisa ruang */
