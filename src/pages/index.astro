@@ -11,16 +11,19 @@ const recentPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
 <Base title="Afif Musyaffa">
   <main>
 
-    <section class="hero-inside-head">
-      <div class="canvas-container">
-        <img src="/kepala-terbuka.png" alt="Inside Afif's Head" class="head-artwork" />
-      </div>
+    <section class="hero-giant-typography">
+      <h1>
+        <span class="line">WELCOME TO THE</span>
+        <span class="line">EVERYDAY MESS</span>
+        <span class="line">INSIDE MY HEAD.</span>
+        <span class="line">MAKING HONEST</span>
+        <span class="line">THINGS & LETTING</span>
+        <span class="line">THE NOISE FIND</span>
+        <span class="line">ITS PEOPLE.</span>
+      </h1>
     </section>
-
     <section class="section-work-showreel">
-      <div class="section-header">
-        <p class="section-label">Showreel</p>
-      </div>
+      
  
       <a href="/work" class="work-marquee-banner">
         <div class="marquee-track">
@@ -89,41 +92,67 @@ const recentPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
 <style>
   /* --- Global Styles --- */
   main {
-    max-width: 1440px; /* Membatasi lebar maksimal agar tidak terlalu meluas di monitor besar */
+    max-width: 1440px; 
     margin: 0 auto;
   }
 
-  /* --- Hero Section (Inside Head Concept) --- */
-  .hero-inside-head {
-    width: 100%;
-    min-height: calc(100vh - 57px); /* Mengambil tinggi layar penuh dikurangi navbar */
-    background: var(--bg); /* Latar gelap bawaan tema website-mu */
-    border-bottom: 0.5px solid var(--border);
+  /* --- HERO GIANT TYPOGRAPHY --- */
+  .hero-giant-typography {
+    padding: 4rem 0 0 0; 
     display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden; /* Memastikan garis/gambar yang keluar jalur terpotong rapi */
-    padding: 2rem;
+    flex-direction: column;
   }
 
-  .canvas-container {
-    position: relative;
-    width: 100%;
-    max-width: 1200px; /* Batas maksimal lebar kanvas di desktop */
+  .hero-giant-typography h1 {
+    font-family: 'Helvetica Neue', Arial, sans-serif; 
+    font-size: 8.5vw; /* Ukuran yang pas untuk teks panjang */
+    font-weight: 900; 
+    line-height: 0.85; 
+    text-transform: uppercase; 
+    letter-spacing: -0.03em; 
+    color: var(--text);
+    margin: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
   }
 
-  .head-artwork {
-    width: 100%;
-    max-height: 85vh; /* Menjaga agar gambar tidak terpotong layar atas-bawah */
-    object-fit: contain; /* Memastikan keseluruhan PNG milikmu tampil utuh tanpa distorsi */
-    z-index: 2;
+  .hero-giant-typography .line {
+    display: block;
+    white-space: nowrap;
   }
+
+  /* Penyesuaian jarak Showreel */
+  /* Penyesuaian jarak Showreel & Breakout Edge-to-Edge */
+  .section-work-showreel {
+    margin-top: 0; 
+    padding-bottom: 0; 
+    margin-bottom: 4rem; 
+    
+    /* TRIK BREAKOUT */
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow: hidden; 
+    
+    border: none; 
+  }
+
+  /* Responsivitas HP */
+  @media (max-width: 640px) {
+    .hero-giant-typography h1 {
+      font-size: 14vw; /* Dikecilkan sedikit di HP agar tidak keluar layar */
+      line-height: 0.85;
+    }
+    .hero-giant-typography {
+      padding-top: 2rem;
+    }
+  }
+
   .writing-title { font-size: 13px; margin-top: .3rem; line-height: 1.4; }
-
   /* --- Section Shared --- */
   .section-header {
     display: flex;
@@ -141,11 +170,6 @@ const recentPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
   .section-link:hover { color: var(--text); }
 
 /* --- Work Section (Marquee Showreel) --- */
-  .section-work-showreel {
-    padding: 4rem 2rem;
-    background: var(--surface);
-    border-bottom: 0.5px solid var(--border);
-  }
 
   .work-marquee-banner {
     width: 100%;
