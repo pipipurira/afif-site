@@ -16,11 +16,14 @@ const recentPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
         <span class="line">WELCOME TO THE</span>
         <span class="line">EVERYDAY MESS</span>
         <span class="line">INSIDE MY HEAD.</span>
+      </h1>
+      
+      <p class="hero-subtitle">
         <span class="line">MAKING HONEST</span>
         <span class="line">THINGS & LETTING</span>
         <span class="line">THE NOISE FIND</span>
         <span class="line">ITS PEOPLE.</span>
-      </h1>
+      </p>
     </section>
     <section class="section-work-showreel">
       
@@ -120,6 +123,28 @@ const recentPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
   .hero-giant-typography .line {
     display: block;
     white-space: nowrap;
+  }
+  /* --- SUBTITLE (HIERARKI LEBIH KECIL) --- */
+  .hero-subtitle {
+    font-family: 'Helvetica Neue', Arial, sans-serif; 
+    font-size: 3.5vw; /* Ukuran menyusut jauh dibanding H1 (8.5vw) */
+    font-weight: 700; /* Tetap tebal, tapi tidak segemuk H1 */
+    line-height: 1; /* Jarak antar baris sedikit dilonggarkan */
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--text); /* Opsional: Jika ingin lebih kalem, ubah jadi var(--muted) */
+    margin: 0; /* Memberikan jarak pemisah dari teks raksasa di atasnya */
+    
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Responsivitas HP khusus Subtitle */
+  @media (max-width: 640px) {
+    .hero-subtitle {
+      font-size: 6.5vw; /* Penyesuaian agar terbaca di HP */
+      margin-top: 1.5rem;
+    }
   }
 
   /* Penyesuaian jarak Showreel */
