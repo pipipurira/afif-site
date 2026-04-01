@@ -139,13 +139,7 @@ const recentPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
     flex-direction: column;
   }
 
-  /* Responsivitas HP khusus Subtitle */
-  @media (max-width: 640px) {
-    .hero-subtitle {
-      font-size: 6.5vw; /* Penyesuaian agar terbaca di HP */
-      margin-top: 1.5rem;
-    }
-  }
+  
 
   /* Penyesuaian jarak Showreel */
   /* Penyesuaian jarak Showreel & Breakout Edge-to-Edge */
@@ -168,12 +162,20 @@ const recentPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
 
   /* Responsivitas HP */
   @media (max-width: 640px) {
-    .hero-giant-typography h1 {
-      font-size: 14vw; /* Dikecilkan sedikit di HP agar tidak keluar layar */
-      line-height: 0.85;
-    }
     .hero-giant-typography {
       padding-top: 2rem;
+      padding-left: 1rem; 
+      padding-right: 1rem;
+    }
+    
+    .hero-giant-typography h1 {
+      font-size: 9.5vw; 
+      line-height: 0.85;
+    }
+    
+    .hero-subtitle {
+      font-size: 5vw; 
+      margin-top: 0; 
     }
   }
 
