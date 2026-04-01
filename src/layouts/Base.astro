@@ -22,12 +22,17 @@ const { title } = Astro.props
 
 <style is:global>
   :root {
-    --bg: #0a0a0a;
-    --surface: #141414;
-    --text: #f0ece4;
-    --muted: #888780;
-    --accent: #000072;
-    --border: rgba(240, 236, 228, 0.1);
+    /* --- The Soft Noise Palette --- */
+    --bg: #EAE6DF; /* Latar utama: Krem pucat / Dusty Stone yang sangat menenangkan mata */
+    --surface: #DFDAD1; /* Latar sekunder (untuk tag/kategori): Sedikit lebih gelap dari bg */
+    --text: #111111; /* Teks: Hitam tinta pekat, menabrak tajam latarnya */
+    --muted: #6B6B6B; /* Teks pelengkap & menu navigasi: Abu-abu editorial */
+    
+    /* Aksen kreatif untuk link/hover, silakan bereksperimen! */
+    --accent: #FF3B00; /* Oranye kemerahan (Pop/Neon) yang playful */
+    
+    /* Kunci Brutalism-nya ada di sini: */
+    --border: #111111; /* Garis pembatas berubah jadi hitam pekat dan solid */
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
